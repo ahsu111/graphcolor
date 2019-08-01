@@ -56,45 +56,22 @@ public class PointerEventsController : MonoBehaviour, IPointerEnterHandler, IPoi
             templines[cityofdestination].GetComponent<LineRenderer>().sortingOrder = 2;
             templines[cityofdestination].GetComponent<LineRenderer>().SetPositions(coordinates);
 
-            if (GameManager.problemName == 't'.ToString() || GameManager.problemName == 'm'.ToString())
-            {
-                // TSP instance
-                int dt = BoardManager.distances[cityofdeparture, cityofdestination];
-                tempDistances[cityofdestination] = Instantiate(BoardManager.TextPrefab, new Vector2(0, 0), Quaternion.identity) as GameObject;
-                tempDistances[cityofdestination].transform.SetParent(BoardManager.canvas.GetComponent<Transform>(), false);
-                tempDistances[cityofdestination].transform.position = ((coordestination + coordeparture) / 2);
-                
-                if (GameManager.problemName == 't'.ToString())
-                {
-                    tempDistances[cityofdestination].GetComponent<Text>().text = dt.ToString();
-                }
-                else
-                {
-                    tempDistances[cityofdestination].GetComponent<Text>().text = dt.ToString();
-                }
+            // WCSPP Instance
+            int wt = BoardManager.weights[cityofdeparture, cityofdestination];
+            tempWeights[cityofdestination] = Instantiate(BoardManager.TextPrefab, new Vector2(0, 0), Quaternion.identity) as GameObject;
+            tempWeights[cityofdestination].transform.SetParent(BoardManager.canvas.GetComponent<Transform>(), false);
+            tempWeights[cityofdestination].transform.position = ((coordestination + coordeparture) / 2) - new Vector2(0.23f, 0.0f);
+            tempWeights[cityofdestination].GetComponent<Text>().text = "$" + wt.ToString();
+            tempWeights[cityofdestination].GetComponent<Text>().color = textcol;
+            tempWeights[cityofdestination].GetComponent<Light>().enabled = true;
 
-                tempDistances[cityofdestination].GetComponent<Text>().color = textcol;
-                tempDistances[cityofdestination].GetComponent<Light>().enabled = true;
-            }
-            else if (GameManager.problemName == 'w'.ToString())
-            {
-                // WCSPP Instance
-                int wt = BoardManager.weights[cityofdeparture, cityofdestination];
-                tempWeights[cityofdestination] = Instantiate(BoardManager.TextPrefab, new Vector2(0, 0), Quaternion.identity) as GameObject;
-                tempWeights[cityofdestination].transform.SetParent(BoardManager.canvas.GetComponent<Transform>(), false);
-                tempWeights[cityofdestination].transform.position = ((coordestination + coordeparture) / 2) - new Vector2(0.23f, 0.0f);
-                tempWeights[cityofdestination].GetComponent<Text>().text = "$" + wt.ToString();
-                tempWeights[cityofdestination].GetComponent<Text>().color = textcol;
-                tempWeights[cityofdestination].GetComponent<Light>().enabled = true;
-
-                int dt = BoardManager.distances[cityofdeparture, cityofdestination];
-                tempDistances[cityofdestination] = Instantiate(BoardManager.TextPrefab, new Vector2(0, 0), Quaternion.identity) as GameObject;
-                tempDistances[cityofdestination].transform.SetParent(BoardManager.canvas.GetComponent<Transform>(), false);
-                tempDistances[cityofdestination].transform.position = ((coordestination + coordeparture) / 2) + new Vector2(0.23f, 0.0f);
-                tempDistances[cityofdestination].GetComponent<Text>().text = "T:" + dt.ToString();
-                tempDistances[cityofdestination].GetComponent<Text>().color = textcol;
-                tempDistances[cityofdestination].GetComponent<Light>().enabled = true;
-            }
+            int dt = BoardManager.distances[cityofdeparture, cityofdestination];
+            tempDistances[cityofdestination] = Instantiate(BoardManager.TextPrefab, new Vector2(0, 0), Quaternion.identity) as GameObject;
+            tempDistances[cityofdestination].transform.SetParent(BoardManager.canvas.GetComponent<Transform>(), false);
+            tempDistances[cityofdestination].transform.position = ((coordestination + coordeparture) / 2) + new Vector2(0.23f, 0.0f);
+            tempDistances[cityofdestination].GetComponent<Text>().text = "T:" + dt.ToString();
+            tempDistances[cityofdestination].GetComponent<Text>().color = textcol;
+            tempDistances[cityofdestination].GetComponent<Light>().enabled = true;
 
             if (BoardManager.previouscities.Count() != 0 && cityofdestination == BoardManager.previouscities.Last())
             {

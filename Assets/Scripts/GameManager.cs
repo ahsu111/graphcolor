@@ -83,9 +83,7 @@ public class GameManager : MonoBehaviour
     public static string problemName;
 
     // The order of the Instances to be presented
-    public static int[] tspRandomization;
     public static int[] wcsppRandomization;
-    public static int[] mtspRandomization;
 
     // A list of floats to record participant performance
     // Performance should always be equal to or greater than 1.
@@ -110,25 +108,7 @@ public class GameManager : MonoBehaviour
 
     // binary variable to keep track of whether the submission was due to time out or user choice
     public static int timedOut;
-
-    // An array of all the TSP instances, i.e importing everything using the struct below 
-    public static TSPInstance[] tspInstances;
-    public static TSPInstance[] mtspInstances;
-
-    // A struct that contains the parameters of each TSP instance
-    public struct TSPInstance
-    {
-        // Cities and their coordinates
-        public float[] coordinatesx;
-        public float[] coordinatesy;
-
-        public int[,] distancematrix;
-
-        public int ncities;
-
-        public int solution;
-    }
-
+    
     // An array of all the instances, i.e importing everything using the structure below 
     public static WCSPPInstance[] wcsppInstances;
 
@@ -227,35 +207,6 @@ public class GameManager : MonoBehaviour
             skipButton = GameObject.Find("Skip").GetComponent<Button>();
             skipButton.onClick.AddListener(SkipClicked);
         }
-        else if (escena == "InterProblemRest")
-        {
-            trial = 0;
-            TotalTrial = 0;
-            block = 0;
-            showTimer = true;
-
-            totalTime = tiempo = timeRest3;
-
-            problemName = problemOrder[currentProblem];
-            currentProblem++;
-
-            Text nombre = GameObject.Find("ProblemName").GetComponent<Text>();
-            if (problemName == 't'.ToString())
-            {
-                nombre.text = "Next Problem: TSP 2";
-            }
-            else if (problemName == 'w'.ToString())
-            {
-                nombre.text = "Next Problem: WCSPP";
-            }
-            else if (problemName == 'm'.ToString())
-            {
-                nombre.text = "Next Problem: TSP 1";
-            }
-
-            skipButton = GameObject.Find("Skip").GetComponent<Button>();
-            skipButton.onClick.AddListener(SkipClicked);
-        }
         else if (escena == "End")
         {
             showTimer = false;
@@ -286,25 +237,11 @@ public class GameManager : MonoBehaviour
     {
         string perfText = "";
 
-        string probName = problemOrder[problemNumber];
+        // WCSPP Instance
+        perfText += "WCSPP:";
 
-        if (probName == 't'.ToString())
-        {
-            // TSP instance
-            perfText += "rTSP:";
-        }
-        else if (probName == 'w'.ToString())
-        {
-            // WCSPP Instance
-            perfText += "WCSPP:";
-        }
-        else if (probName == 'm'.ToString())
-        {
-            // M Instance
-            perfText += "MTSP:";
-        }
 
-        for (int i = problemNumber * numberOfInstances; i < numberOfInstances + problemNumber * numberOfInstances; i++)
+        for (int i = 0; i < numberOfInstances; i++)
         {
             // Payment calculation
             perfText += " $" + paylist[i] + ";";
@@ -333,14 +270,8 @@ public class GameManager : MonoBehaviour
         numberOfBlocks = int.Parse(dictionary["numberOfBlocks"]);
         numberOfInstances = numberOfTrials * numberOfBlocks;
 
-        // Getting TSP randomisation parameters. 
-        tspRandomization = StrToInt(dictionary["tspRandomization"]);
-
         // Getting WCSPP randomisation parameters
         wcsppRandomization = StrToInt(dictionary["wcsppRandomization"]);
-
-        // Getting m randomisation parameters
-        mtspRandomization = StrToInt(dictionary["mRandomization"]);
 
         // Getting problem randomisation parameters
         problemOrder = StrToStr(dictionary["problemOrder"]);
@@ -408,14 +339,6 @@ public class GameManager : MonoBehaviour
             if (problemName == 'w'.ToString())
             {
                 pay = Math.Pow(performance, 4.50);
-            }
-            else if (problemName == 't'.ToString())
-            {
-                pay = Math.Pow(performance, 1.50);
-            }
-            else if (problemName == 'm'.ToString())
-            {
-                pay = Math.Pow(performance, 3.00);
             }
 
             paylist.Add(pay);
