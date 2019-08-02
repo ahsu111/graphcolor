@@ -130,7 +130,8 @@ public class GameManager : MonoBehaviour
 
         public int solution;
     }
-    
+    public static Texture2D Triangle;
+
     // Use this for initialization
     void Start()
     {
@@ -143,6 +144,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        Texture2D Triangle = (Texture2D)Resources.Load("StartCity");//new Texture2D(128, 128, TextureFormat.RGBA32, false);
+        
+        Cursor.SetCursor(Triangle, new Vector2 (0,0), CursorMode.Auto);
 
         DontDestroyOnLoad(gameObject);
 

@@ -1,0 +1,6 @@
+PartcipantID:1
+RandID:1
+InitialTimeStamp:10-02-38-535
+block;trial;eventType;elapsedTime
+1;0;InterProblemRest;0.08
+1;1;Trial;0.167

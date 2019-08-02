@@ -2,3 +2,7 @@
 0;1;InterTrialRest;0
 0;1;End;0
 0;1;Payment;0
+0;1;ParticipantAnswer;0
+0;1;InterTrialRest;0
+0;1;End;0
+0;1;Payment;0

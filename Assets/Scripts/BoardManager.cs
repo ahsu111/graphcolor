@@ -97,6 +97,11 @@ public class BoardManager : MonoBehaviour
         keysON = true;
     }
 
+    public static Button RedC;
+    public static Button YellowC;
+    public static Button GreenC;
+    public static Button BlueC;
+
     // Initializes the instance for this trial:
     // 1. Sets the question string using the instance (from the .txt files)
     // 2. The weight and value vectors are uploaded
@@ -114,6 +119,19 @@ public class BoardManager : MonoBehaviour
         Reset = GameObject.Find("Reset").GetComponent<Button>();
         Reset.onClick.AddListener(ResetClicked);
 
+
+        RedC = GameObject.Find("RedCircle").GetComponent<Button>();
+        RedC.onClick.AddListener(delegate { ColorSelect("Red"); });
+
+        YellowC = GameObject.Find("YellowCircle").GetComponent<Button>();
+        YellowC.onClick.AddListener(delegate { ColorSelect("Yellow"); });
+
+        GreenC = GameObject.Find("GreenCircle").GetComponent<Button>();
+        GreenC.onClick.AddListener(delegate { ColorSelect("Green"); });
+
+        BlueC = GameObject.Find("BlueCircle").GetComponent<Button>();
+        BlueC.onClick.AddListener(delegate { ColorSelect("Blue"); });
+
         // WCSPP Instance
         Debug.Log("Setting up WCSPP Instance: Block " + (GameManager.block + 1) + "/" + GameManager.numberOfBlocks + ", Trial " + GameManager.trial + "/" + GameManager.numberOfTrials + " , Total Trial " + GameManager.TotalTrial + " , Current Instance " + (GameManager.wcsppRandomization[GameManager.TotalTrial - 1] + 1));
 
@@ -123,7 +141,16 @@ public class BoardManager : MonoBehaviour
 
         SetDistanceText();
     }
-    
+
+    void ColorSelect(string color)
+    {
+        Debug.Log(color);
+        if(color == "Blue")
+        {
+            Cursor.SetCursor((Texture2D)Resources.Load("EndCity"), new Vector2(0, 0), CursorMode.Auto);
+        }
+    }
+
     // Funciton to set up WCSPP instance
     void SetWCSPP(GameManager.WCSPPInstance currentInstance)
     {
